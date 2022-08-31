@@ -6,6 +6,11 @@ metadata:
     app: {{ .Values.deployment.name }} # Label to apply to the resource
 spec:
   replicas: {{ .Values.deployment.replicas }} # Number of replicas to create
+  strategy:
+    type: RollingUpdate # Type of the deployment strategy
+    rollingUpdate:
+      maxSurge: {{ .Values.deployment.strategy.rollingUpdate.maxSurge }} # Maximum number of pods to create
+      maxUnavailable: {{ .Values.deployment.strategy.rollingUpdate.maxUnavailable }} # Maximum number of pods to delete
   selector:
     matchLabels:
       app: {{ .Values.deployment.name }} # Label to select the resource

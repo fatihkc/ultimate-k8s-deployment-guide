@@ -1,6 +1,10 @@
 deployment:
   name: "webserver"
   replicas: "1"
+  strategy:
+    rollingUpdate:
+      maxSurge: "1"
+      maxUnavailable: "1"
   container:
     name: "webserver"
     image: "fatihkoc/app:latest"
