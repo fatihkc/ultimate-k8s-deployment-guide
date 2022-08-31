@@ -1,0 +1,29 @@
+deployment:
+  name: "webserver"
+  replicas: "1"
+  container:
+    name: "webserver"
+    image: "fatihkoc/app:latest"
+    imagePullPolicy: "IfNotPresent"
+    port: "8080"
+    protocol: "TCP"
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "100Mi"
+      limits:
+        cpu: "110m"
+        memory: "110Mi"
+    env:
+      APP_NAME: "webserver"
+
+service:
+  name: "webserver"
+  selector:
+    name: "webserver"
+  ports:
+    protocol: "TCP"
+    port: "8080"
+    targetPort: "8080"
+    type: "NodePort"
+    nodePort: "30000"

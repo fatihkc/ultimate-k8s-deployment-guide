@@ -1,5 +1,7 @@
 # ultimate-k8s-deployment-guideline
 
+Blog post is coming soon.
+
 Tech Stack
 
 golang 1.18.3

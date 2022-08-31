@@ -1,0 +1,33 @@
+apiVersion: apps/v1 # API version to use for all resources in the manifest
+kind: Deployment # Kind of the resource to create
+metadata:
+  name: {{ .Values.deployment.name }} # Name of the resource to create
+  labels:
+    app: {{ .Values.deployment.name }} # Label to apply to the resource
+spec:
+  replicas: {{ .Values.deployment.replicas }} # Number of replicas to create
+  selector:
+    matchLabels:
+      app: {{ .Values.deployment.name }} # Label to select the resource
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.deployment.name }} # Label to apply to the resource
+    spec:
+      containers:
+        - name: {{ .Values.deployment.container.name }} # Name of the container in the pod
+          image: {{ .Values.deployment.container.image }} # Image to use for the container
+          imagePullPolicy: {{ .Values.deployment.container.imagePullPolicy }} # Image pull policy to use for the container
+          ports:
+            - containerPort: {{ .Values.deployment.container.port }} # Port to expose on the container
+              protocol: {{ .Values.deployment.container.protocol }} # Protocol to use for the port
+          env:
+          - name: APP_NAME
+            value: {{ .Values.deployment.container.env.APP_NAME }} # Environment variable to set for the container
+          resources:
+            requests:
+              cpu: {{ .Values.deployment.container.resources.requests.cpu }} # CPU to request for the container
+              memory: {{ .Values.deployment.container.resources.requests.memory }} # Memory to request for the container
+            limits:
+              cpu: {{ .Values.deployment.container.resources.limits.cpu }} # CPU to limit for the container
+              memory: {{ .Values.deployment.container.resources.limits.memory }} # Memory to limit for the container
