@@ -36,3 +36,49 @@ spec:
             limits:
               cpu: {{ .Values.deployment.container.resources.limits.cpu }} # CPU to limit for the container
               memory: {{ .Values.deployment.container.resources.limits.memory }} # Memory to limit for the container
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.deployment.container.livenessProbe.path}} # Path to check for liveness
+              port: {{ .Values.deployment.container.livenessProbe.port }} # Port to check for liveness
+            initialDelaySeconds: {{ .Values.deployment.container.livenessProbe.initialDelaySeconds }} # Initial delay before liveness check
+            timeoutSeconds: {{ .Values.deployment.container.livenessProbe.timeoutSeconds }} # Timeout before liveness check
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.deployment.container.readinessProbe.path }} # Path to check for readiness
+              port: {{ .Values.deployment.container.readinessProbe.port }} # Port to check for readiness
+            initialDelaySeconds: {{ .Values.deployment.container.readinessProbe.initialDelaySeconds }} # Initial delay before readiness check
+            timeoutSeconds: {{ .Values.deployment.container.readinessProbe.timeoutSeconds }} # Timeout before readiness check
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+      serviceAccountName: {{ .Values.deployment.serviceAccountName }} # Service account to use for the pod
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 10 # Weight of the node affinity
+              preference:
+                matchExpressions:
+                - key: kubernetes.io/arch # Key of the node affinity
+                  operator: In # Operator to use for the node affinity
+                  values:
+                    - arm64 # Value of the node affinity
+            - weight: 10 # Weight of the node affinity
+              preference:
+                matchExpressions:
+                - key: kubernetes.io/os # Key of the node affinity
+                  operator: In # Operator to use for the node affinity
+                  values:
+                    - linux # Value of the node affinity
+      topologySpreadConstraints:
+        - maxSkew: 1 # Maximum number of pods to spread
+          topologyKey: "topology.kubernetes.io/zone" # Key to use for spreading
+          whenUnsatisfiable: ScheduleAnyway # Action to take if the constraint is not satisfied
+          labelSelector:
+            matchLabels:
+              app: {{ .Release.Name }} # Label to select the resource
+        - maxSkew: 1
+          topologyKey: "kubernetes.io/hostname" # Key to use for spreading
+          whenUnsatisfiable: ScheduleAnyway # Action to take if the constraint is not satisfied
+          labelSelector:
+            matchLabels:
+              app: {{ .Release.Name }} # Label to select the resource

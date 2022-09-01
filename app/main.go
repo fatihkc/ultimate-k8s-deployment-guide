@@ -11,5 +11,10 @@ func main() {
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "Hello, World!")
 	})
+	e.GET("/health", healthCheck)
 	e.Logger.Fatal(e.Start(":8080"))
+}
+
+func healthCheck(c echo.Context) error {
+	return c.String(http.StatusOK, "Service is healthy!")
 }

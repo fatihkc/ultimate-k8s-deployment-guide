@@ -8,7 +8,7 @@ deployment:
   container:
     name: "webserver"
     image: "fatihkoc/app:latest"
-    imagePullPolicy: "IfNotPresent"
+    imagePullPolicy: "Always"
     port: "8080"
     protocol: "TCP"
     resources:
@@ -20,7 +20,17 @@ deployment:
         memory: "110Mi"
     env:
       APP_NAME: "webserver"
-
+    livenessProbe:
+      path: "/health"
+      port: "8080"
+      initialDelaySeconds: "30"
+      timeoutSeconds: "5"
+    readinessProbe:
+      path: "/health"
+      port: "8080"
+      initialDelaySeconds: "30"
+      timeoutSeconds: "5"
+  serviceAccountName: "webserver"
 service:
   name: "webserver"
   selector:
