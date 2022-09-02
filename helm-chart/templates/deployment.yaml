@@ -1,7 +1,8 @@
 apiVersion: apps/v1 # API version to use for all resources in the manifest
 kind: Deployment # Kind of the resource to create
 metadata:
-  name: {{ .Values.deployment.name }} # Name of the resource to create
+  name: {{ .Release.Name }} # Name of the resource to create
+  namespace: {{ .Release.Namespace }} # Namespace to create the resource in
   labels:
     app: {{ .Values.deployment.name }} # Label to apply to the resource
 spec:
@@ -29,6 +30,9 @@ spec:
           env:
           - name: APP_NAME
             value: {{ .Values.deployment.container.env.APP_NAME }} # Environment variable to set for the container
+          envFrom:
+          - configMapRef:
+              name: {{ .Release.Name }} # ConfigMap to use for the environment variables
           resources:
             requests:
               cpu: {{ .Values.deployment.container.resources.requests.cpu }} # CPU to request for the container
