@@ -6,7 +6,14 @@ Ultimate K8s Deployment Guide is a collection of best practices for deploying ap
 
 ![Diagram](images/diagram.png)
 
-## Create infrastructure
+## Prerequisites:
+
+ - [Check blog post](https://www.fatihkoc.net/posts/helm-deployment-guide)
+ - [Docker](https://docs.docker.com/engine/install/ubuntu/)
+ - [Kind](https://kind.sigs.k8s.io/docs/user/quick-start/#installation)
+ - [Helm](https://helm.sh/docs/intro/install/)
+
+## Create infrastructure
 
 Clone repository
 
@@ -26,7 +33,8 @@ Install Helm Chart
 ```bash
 helm upgrade --install webserver helm-chart -f helm-chart/values.yaml -n $NAMESPACE
 ```
-TODO
+
+## TODO
 
 - Add more complex examples
 - Persistent volume
@@ -35,6 +43,6 @@ TODO
 - HPA
 - Ingress
 
-LICENSE
+## LICENSE
 
 [MIT License](https://choosealicense.com/licenses/mit/)
