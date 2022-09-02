@@ -4,4 +4,4 @@ metadata:
   name: {{ .Release.Name }}
   namespace: {{ .Release.Namespace }}
 data:
-  USER: "{{ .Values.USER }}"
+  USER: "{{ .Values.configmap.value }}"

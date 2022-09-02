@@ -30,9 +30,11 @@ spec:
           env:
           - name: APP_NAME
             value: {{ .Values.deployment.container.env.APP_NAME }} # Environment variable to set for the container
-          envFrom:
-          - configMapRef:
-              name: {{ .Release.Name }} # ConfigMap to use for the environment variables
+          - name: USER
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Release.Name }} # Environment variable to set for the container
+                key: {{ .Values.configmap.key }} # Environment variable to set for the container
           volumeMounts:
           - mountPath: "/tmp" # Mount path for the container
             name: test-volume # Name of the volume mount

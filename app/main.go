@@ -1,24 +1,19 @@
 package main
 
 import (
-	"log"
 	"net/http"
 	"os"
 
-	"github.com/joho/godotenv"
 	"github.com/labstack/echo"
 )
 
 func main() {
 
-	err := godotenv.Load(".env")
-
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
-
 	user := os.Getenv("USER")
 	secret, err := os.ReadFile("/tmp/secret-file.txt")
+	if err != nil {
+		panic(err)
+	}
 
 	e := echo.New()
 	e.GET("/", func(c echo.Context) error {

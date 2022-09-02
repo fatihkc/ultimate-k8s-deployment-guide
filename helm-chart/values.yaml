@@ -43,4 +43,5 @@ service:
     nodePort: "30000"
 
 configmap:
-  USER: "fatih"
+  key: USER
+  value: "Fatih"
