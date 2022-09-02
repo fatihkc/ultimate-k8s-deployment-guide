@@ -61,6 +61,11 @@ spec:
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 1000
+            capabilities:
+              drop:
+                - ALL
       volumes:
         - name: test-volume # Name of the volume
           secret:  # Volume to use for the secret
