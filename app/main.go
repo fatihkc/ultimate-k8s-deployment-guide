@@ -18,10 +18,11 @@ func main() {
 	}
 
 	user := os.Getenv("USER")
+	secret, err := os.ReadFile("/tmp/secret-file.txt")
 
 	e := echo.New()
 	e.GET("/", func(c echo.Context) error {
-		hello := "Hello, " + user
+		hello := "Hello, " + user + "!" + " Your secret is: " + string(secret)
 		return c.String(http.StatusOK, hello)
 	})
 	e.GET("/health", healthCheck)
