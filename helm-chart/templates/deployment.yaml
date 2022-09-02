@@ -63,7 +63,6 @@ spec:
         - name: test-volume # Name of the volume
           secret:  # Volume to use for the secret
             secretName: test # Name of the secret to use for the volume
-      serviceAccountName: {{ .Values.deployment.serviceAccountName }} # Service account to use for the pod
       affinity:
         nodeAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:

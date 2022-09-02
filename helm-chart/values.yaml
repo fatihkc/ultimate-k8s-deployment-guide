@@ -30,7 +30,6 @@ deployment:
       port: "8080"
       initialDelaySeconds: "30"
       timeoutSeconds: "5"
-  serviceAccountName: "webserver"
 
 service:
   name: "webserver"
